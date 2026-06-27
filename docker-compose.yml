@@ -1,0 +1,13 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: timescaledb
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD} # 设置你的数据库密码
+      - TZ=Asia/Shanghai                        # 设置时区
+    ports:
+      - "5432:5432"                             # 暴露 5432 端口
+    volumes:
+      - ./data:/var/lib/postgresql/data       # 挂载数据持久化目录
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d # 挂载初始化脚本目录
